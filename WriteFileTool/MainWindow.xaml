@@ -11,15 +11,15 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <Label x:Name="DirectoryLabel" Content="Dossier de développement" HorizontalAlignment="Left" Margin="0,0,0,0" Padding="0,0,0,0" VerticalAlignment="Top" />
+        <Label x:Name="DirectoryLabel" Content="Dossier sélectionné" HorizontalAlignment="Left" Margin="0,0,0,0" Padding="0,0,0,0" VerticalAlignment="Top" />
         <TextBox x:Name="SelectedDirectoryTextBox" HorizontalAlignment="Left" Margin="0,20,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="450" Height="20" />
         <Button x:Name="SelectedDirectoryButton" Content="..." HorizontalAlignment="Right" Margin="0,20,0,0" VerticalAlignment="Top" Width="42" Click="SelectedDirectoryButton_Click"/>
 
-        <Label x:Name="StartFileLabel" Content="Début de fichier" HorizontalAlignment="Left" Margin="0,50,0,0" Padding="0,0,0,0" VerticalAlignment="Top" />
-        <TextBox x:Name="ContentStartFileTextBox" HorizontalAlignment="Stretch" Height="50" Margin="0,70,0,0" VerticalAlignment="Top" VerticalScrollBarVisibility="Auto" AcceptsReturn="True"  />
+        <Label x:Name="TextFileStartLabel" Content="Texte de début de fichier" HorizontalAlignment="Left" Margin="0,50,0,0" Padding="0,0,0,0" VerticalAlignment="Top" />
+        <TextBox x:Name="TextFileStartTextBox" HorizontalAlignment="Stretch" Height="50" Margin="0,70,0,0" VerticalAlignment="Top" VerticalScrollBarVisibility="Auto" AcceptsReturn="True"  />
 
-        <Label x:Name="EndFileLabel" Content="Fin de fichier" HorizontalAlignment="Left" Margin="0,130,0,0" Padding="0,0,0,0" VerticalAlignment="Top" />
-        <TextBox x:Name="ContentEndFileTextBox" HorizontalAlignment="Stretch" Height="50" Margin="0,150,0,0" VerticalAlignment="Top" VerticalScrollBarVisibility="Auto" AcceptsReturn="True" />
+        <Label x:Name="TextFileEndLabel" Content="Texte de la fin de fichier" HorizontalAlignment="Left" Margin="0,130,0,0" Padding="0,0,0,0" VerticalAlignment="Top" />
+        <TextBox x:Name="TextFileEndTextBox" HorizontalAlignment="Stretch" Height="50" Margin="0,150,0,0" VerticalAlignment="Top" VerticalScrollBarVisibility="Auto" AcceptsReturn="True" />
 
         <Button x:Name="UpdateFilesButton" Content="Modifier" HorizontalAlignment="Center" Margin="0,250,0,0" VerticalAlignment="Top" Width="100" Click="UpdateContentFilesButton_Click"/>
     </Grid>

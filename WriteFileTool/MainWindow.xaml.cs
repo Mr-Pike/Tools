@@ -20,8 +20,8 @@ namespace WriteFileTool
         private void InitializeMainWindow()
         {
             SelectedDirectoryTextBox.Text = ConfigurationService.SelectedDirectoryDefault;
-            ContentStartFileTextBox.Text = ConfigurationService.ContentStartFileDefault;
-            ContentEndFileTextBox.Text = ConfigurationService.ContentEndFileDefault;
+            TextFileStartTextBox.Text = ConfigurationService.TextFileStartDefault;
+            TextFileEndTextBox.Text = ConfigurationService.TextFileEndDefault;
         }
 
         private void SelectedDirectoryButton_Click(object sender, RoutedEventArgs e)
@@ -50,8 +50,8 @@ namespace WriteFileTool
             {
                 var fileService = new FileProcessingService(
                     directoryInfo: new DirectoryInfo(SelectedDirectoryTextBox.Text),
-                    contentStart: ContentStartFileTextBox.Text,
-                    contentEnd: ContentEndFileTextBox.Text
+                    textFileStart: TextFileStartTextBox.Text,
+                    textFileEnd: TextFileEndTextBox.Text
                 );
 
                 await fileService.ProcessFilesAsync();
@@ -65,6 +65,12 @@ namespace WriteFileTool
 
         private void Window_Closing(object sender, CancelEventArgs e)
         {
+            // If parameters is the same as the config, don't suggest this option.
+            if (ConfigurationService.IsSameAsWindow(SelectedDirectoryTextBox.Text, TextFileStartTextBox.Text, TextFileEndTextBox.Text))
+            {
+                return;
+            }
+
             var messageBoxResult = MessageBox.Show("Voulez-vous sauvegarder les valeurs de configuration avant de quitter ?", "Sauvegarder et quitter", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
 
             if (messageBoxResult == MessageBoxResult.Cancel)
@@ -76,7 +82,7 @@ namespace WriteFileTool
             {
                 try
                 {
-                    ConfigurationService.Save(SelectedDirectoryTextBox.Text, ContentStartFileTextBox.Text, ContentEndFileTextBox.Text);
+                    ConfigurationService.Save(SelectedDirectoryTextBox.Text, TextFileStartTextBox.Text, TextFileEndTextBox.Text);
                 }
                 catch (Exception ex)
                 {

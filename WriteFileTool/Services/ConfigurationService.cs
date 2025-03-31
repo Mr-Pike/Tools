@@ -1,28 +1,34 @@
 ﻿using System.Configuration;
+using System.Windows.Navigation;
 
 namespace WriteFileTool.Services
 {
     public static class ConfigurationService
     {
         private const string SELECTED_DIRECTORY_DEFAULT = "SelectedDirectoryDefault";
-        private const string CONTENT_START_FILE_DEFAULT = "ContentStartFileDefault";
-        private const string CONTENT_END_FILE_DEFAULT = "ContentEndFileDefault";
+        private const string TEXT_FILE_START_DEFAULT = "TextFileStartDefault";
+        private const string TEXT_FILE_END_DEFAULT = "TextFileEndDefault";
         private const string NAME_FILE_CHAR_SEPARATOR = "NameFileCharSeparator";
 
         public static string? SelectedDirectoryDefault => ConfigurationManager.AppSettings[SELECTED_DIRECTORY_DEFAULT];
 
-        public static string? ContentStartFileDefault => ConfigurationManager.AppSettings[CONTENT_START_FILE_DEFAULT];
+        public static string? TextFileStartDefault => ConfigurationManager.AppSettings[TEXT_FILE_START_DEFAULT];
 
-        public static string? ContentEndFileDefault => ConfigurationManager.AppSettings[CONTENT_END_FILE_DEFAULT];
+        public static string? TextFileEndDefault => ConfigurationManager.AppSettings[TEXT_FILE_END_DEFAULT];
 
         public static string? NameFileCharSeparator => ConfigurationManager.AppSettings[NAME_FILE_CHAR_SEPARATOR];
 
-        public static void Save(string selectedDirectory, string contentStartFile, string contentEndFile)
+        public static bool IsSameAsWindow(string selectedDirectory, string textFileStart, string textFileEnd)
+        {
+            return SelectedDirectoryDefault == selectedDirectory && TextFileStartDefault == textFileStart && TextFileEndDefault == textFileEnd;
+        }
+
+        public static void Save(string selectedDirectory, string textFileStart, string textFileEnd)
         {
             var config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
             UpdateAppSettings(config, SELECTED_DIRECTORY_DEFAULT, selectedDirectory);
-            UpdateAppSettings(config, CONTENT_START_FILE_DEFAULT, contentStartFile);
-            UpdateAppSettings(config, CONTENT_END_FILE_DEFAULT, contentEndFile);
+            UpdateAppSettings(config, TEXT_FILE_START_DEFAULT, textFileStart);
+            UpdateAppSettings(config, TEXT_FILE_END_DEFAULT, textFileEnd);
             config.Save(ConfigurationSaveMode.Modified);
         }
 

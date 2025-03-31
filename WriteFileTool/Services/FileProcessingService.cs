@@ -2,11 +2,11 @@
 
 namespace WriteFileTool.Services
 {
-    public class FileProcessingService(DirectoryInfo directoryInfo, string contentStart, string contentEnd)
+    public class FileProcessingService(DirectoryInfo directoryInfo, string textFileStart, string textFileEnd)
     {
         private readonly DirectoryInfo _directoryInfo = directoryInfo;
-        private readonly string _contentStart = contentStart;
-        private readonly string _contentEnd = contentEnd;
+        private readonly string _textFileStart = textFileStart;
+        private readonly string _textFileEnd = textFileEnd;
 
         public async Task ProcessFilesAsync()
         {
@@ -35,29 +35,29 @@ namespace WriteFileTool.Services
 
             using (var reader = new StreamReader(fileInfo.FullName))
             {
-                var contentOriginal = await reader.ReadToEndAsync();
-                var contentStart = _contentStart.Replace("{number}", number);
+                var originalContent = await reader.ReadToEndAsync();
+                var textFileStart = _textFileStart.Replace("{number}", number);
 
                 // Don't modify file if contains content start and content end.
-                if (contentOriginal.Contains(contentStart) && contentOriginal.Contains(_contentEnd))
+                if (originalContent.Contains(textFileStart) && originalContent.Contains(_textFileEnd))
                 {
                     return;
                 }
 
                 using var writer = new StreamWriter(tempFilePath, false);
 
-                if (!contentOriginal.Contains(contentStart))
+                if (!originalContent.Contains(textFileStart))
                 {
-                    await writer.WriteLineAsync(contentStart);
+                    await writer.WriteLineAsync(textFileStart);
                     await writer.WriteLineAsync();
                 }
 
-                await writer.WriteLineAsync(contentOriginal);
+                await writer.WriteLineAsync(originalContent);
 
-                if (!contentOriginal.Contains(_contentEnd))
+                if (!originalContent.Contains(_textFileEnd))
                 {
                     await writer.WriteLineAsync();
-                    await writer.WriteLineAsync(_contentEnd);
+                    await writer.WriteLineAsync(_textFileEnd);
                 }
             }
 
