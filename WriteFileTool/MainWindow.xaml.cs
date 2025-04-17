@@ -68,6 +68,11 @@ namespace WriteFileTool
             }
         }
 
+        private void CloseButton_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+
         private void Window_Closing(object sender, CancelEventArgs e)
         {
             // If the parameters are the same as the config, don't suggest this option.
