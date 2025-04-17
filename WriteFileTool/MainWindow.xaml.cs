@@ -19,9 +19,12 @@ namespace WriteFileTool
 
         private void InitializeMainWindow()
         {
+            VersionLabel.Content = ConfigurationService.Version;
             SelectedDirectoryTextBox.Text = ConfigurationService.SelectedDirectoryDefault;
             TextFileStartTextBox.Text = ConfigurationService.TextFileStartDefault;
             TextFileEndTextBox.Text = ConfigurationService.TextFileEndDefault;
+            NameFileStringSeparatorTextBox.Text = ConfigurationService.NameFileStringSeparatorDefault;
+            NameFileSearchPatternTextBox.Text = ConfigurationService.NameFileSearchPatternDefault;
         }
 
         private void SelectedDirectoryButton_Click(object sender, RoutedEventArgs e)
@@ -51,7 +54,9 @@ namespace WriteFileTool
                 var fileService = new FileProcessingService(
                     directoryInfo: new DirectoryInfo(SelectedDirectoryTextBox.Text),
                     textFileStart: TextFileStartTextBox.Text,
-                    textFileEnd: TextFileEndTextBox.Text
+                    textFileEnd: TextFileEndTextBox.Text,
+                    nameFileStringSeparator: NameFileStringSeparatorTextBox.Text,
+                    nameFileSearchPattern: NameFileSearchPatternTextBox.Text
                 );
 
                 await fileService.ProcessFilesAsync();
@@ -65,8 +70,8 @@ namespace WriteFileTool
 
         private void Window_Closing(object sender, CancelEventArgs e)
         {
-            // If parameters is the same as the config, don't suggest this option.
-            if (ConfigurationService.IsSameAsWindow(SelectedDirectoryTextBox.Text, TextFileStartTextBox.Text, TextFileEndTextBox.Text))
+            // If the parameters are the same as the config, don't suggest this option.
+            if (ConfigurationService.IsSameAsWindow(SelectedDirectoryTextBox.Text, TextFileStartTextBox.Text, TextFileEndTextBox.Text, NameFileStringSeparatorTextBox.Text, NameFileSearchPatternTextBox.Text))
             {
                 return;
             }
@@ -82,7 +87,7 @@ namespace WriteFileTool
             {
                 try
                 {
-                    ConfigurationService.Save(SelectedDirectoryTextBox.Text, TextFileStartTextBox.Text, TextFileEndTextBox.Text);
+                    ConfigurationService.Save(SelectedDirectoryTextBox.Text, TextFileStartTextBox.Text, TextFileEndTextBox.Text, NameFileStringSeparatorTextBox.Text, NameFileSearchPatternTextBox.Text);
                 }
                 catch (Exception ex)
                 {

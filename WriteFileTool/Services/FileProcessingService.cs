@@ -2,17 +2,19 @@
 
 namespace WriteFileTool.Services
 {
-    public class FileProcessingService(DirectoryInfo directoryInfo, string textFileStart, string textFileEnd)
+    public class FileProcessingService(DirectoryInfo directoryInfo, string textFileStart, string textFileEnd, string nameFileStringSeparator, string nameFileSearchPattern)
     {
         private readonly DirectoryInfo _directoryInfo = directoryInfo;
         private readonly string _textFileStart = textFileStart;
         private readonly string _textFileEnd = textFileEnd;
+        private readonly string _nameFileStringSeparator = nameFileStringSeparator;
+        private readonly string _nameFileSearchPattern = string.IsNullOrEmpty(nameFileSearchPattern) ? "*.*" : nameFileSearchPattern;
 
         public async Task ProcessFilesAsync()
         {
             // Create list of tasks: one task by file.
             var tasks = new List<Task>();
-            foreach (var fileInfo in _directoryInfo.GetFiles("*.*", SearchOption.AllDirectories))
+            foreach (var fileInfo in _directoryInfo.GetFiles(_nameFileSearchPattern, SearchOption.AllDirectories))
             {
                 tasks.Add(ProcessFileAsync(fileInfo));
             }
@@ -23,12 +25,17 @@ namespace WriteFileTool.Services
 
         private async Task ProcessFileAsync(FileInfo fileInfo)
         {
-            var separatorIndex = fileInfo.Name.IndexOf(ConfigurationService.NameFileCharSeparator?.ToString() ?? string.Empty);
+            // Try to get the number before file string separator.
+            var number = string.Empty;
+            if (!string.IsNullOrEmpty(_nameFileStringSeparator))
+            {
+                var separatorIndex = fileInfo.Name.IndexOf(_nameFileStringSeparator);
 
-            // Separator not found: ignore the file.
-            if (separatorIndex == -1) return;
+                // Separator not found: ignore the file.
+                if (separatorIndex == -1) return;
 
-            var number = fileInfo.Name[..separatorIndex];
+                number = fileInfo.Name[..separatorIndex];
+            }
 
             // Temporary file.
             var tempFilePath = $"{fileInfo.FullName}.tmp";
