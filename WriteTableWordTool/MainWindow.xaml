@@ -1,0 +1,61 @@
+﻿<Window x:Class="WriteTableWordTool.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        WindowStartupLocation="CenterScreen"
+        Title="Word Processing" Height="450" Width="540" ResizeMode="NoResize" Closing="Window_Closing">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Version. -->
+        <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,0,0">
+            <Label x:Name="VersionLabel" Content="Version" VerticalAlignment="Top" FontStyle="Italic" />
+        </StackPanel>
+
+        <StackPanel Grid.Row="1" Orientation="Vertical" Margin="0,0,0,10">
+
+            <!-- Groupe Fichier Word -->
+            <GroupBox Header="Emplacements" Margin="0,5,0,0">
+                <StackPanel>
+                    <TextBlock Text="Document Word" Margin="0,0,0,5"/>
+                    <DockPanel>
+                        <TextBox Name="WordFilePathTextBox" Width="450" Margin="0,0,5,0"/>
+                        <Button Name="BrowseWordFileButton" Content="..." Width="30" Click="BrowseWordFileButton_Click"/>
+                    </DockPanel>
+
+                    <TextBlock Text="Répertoire des scripts" Margin="0,0,0,5"/>
+                    <DockPanel>
+                        <TextBox Name="ScriptsDirectoryPathTextBox" Width="450" Margin="0,0,5,0"/>
+                        <Button Name="BrowseScriptsDirectoryButton" Content="..." Width="30" Click="BrowseScriptsDirectoryButton_Click" />
+                    </DockPanel>
+                </StackPanel>
+            </GroupBox>
+
+            <!-- Groupe Options -->
+            <GroupBox Header="Paramétrages" Margin="0,10,0,0">
+                <StackPanel>
+                    <TextBlock Text="Nom des tableaux du document Word" Margin="0,5,0,0"/>
+                    <TextBox Name="TableNamesTextBox" Margin="0,0,0,5"/>
+
+                    <TextBlock Text="Ligne de début de tableau du document Word" Margin="0,5,0,0"/>
+                    <TextBox Name="StartRowTableWordTextBox" Margin="0,0,0,5" />
+
+                    <TextBlock Text="Ordre des sous-répertoires" Margin="0,5,0,0" />
+                    <TextBox Name="SubdirectoryOrderTextBox" Margin="0,0,0,5" />
+
+                    <TextBlock Text="Filtres des fichiers" Margin="0,5,0,0" />
+                    <TextBox Name="FileFiltersTextBox"/>
+                </StackPanel>
+            </GroupBox>
+        </StackPanel>
+
+        <!-- Boutons -->
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,0,0">
+            <Button Name="StartProcessingButton" Content="Lancer le traitement" Width="150" Margin="0,0,10,0" Click="StartProcessingButton_Click" />
+            <Button Name="CloseButton" Content="Fermer" Width="100" Click="CloseButton_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>
