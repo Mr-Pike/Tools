@@ -89,11 +89,22 @@ namespace WriteTableWordTool.Services
 
         private static Table? GetTableByName(Tables tables, string name)
         {
-            foreach (Table table in tables)
+            foreach (Table? table in tables)
             {
-                if (table.Title.Trim() == name)
+                // Try to get table by name.
+                if (table?.Title?.Trim() == name)
                 {
                     return table;
+                }
+
+                // Try to get table by name in subtables.
+                if (table?.Tables != null)
+                {
+                    Table? tableFound = GetTableByName(table.Tables, name);
+                    if (tableFound != null)
+                    {
+                        return tableFound;
+                    }
                 }
             }
 
